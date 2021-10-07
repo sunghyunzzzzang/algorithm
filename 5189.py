@@ -1,10 +1,14 @@
 # 5189. 전자카트
 
-#import sys
-#sys.stdin = open("input.txt", "r")
+import sys
+sys.stdin = open("input.txt", "r")
 
 def dfs(x, temp):
     global result, cnt
+
+    # 현재 계산된 값이 최소값보다 많으면
+    if temp > result:
+        return
 
     if cnt == N - 1:
         temp += arr[x][0]
