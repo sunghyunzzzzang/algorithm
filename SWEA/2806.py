@@ -9,6 +9,7 @@ def dfs(s, count, arr):
     # 퀸을 다 놓게 되면
     if count == 0:
         result += 1
+        return
 
     # 행 별로 확인
     for i in range(N):
@@ -18,9 +19,10 @@ def dfs(s, count, arr):
         # 방문하지않은 열 and 공격범위가 아니면
         if visited[i] == 0 and arr[s][i] == 0:
             visited[i] = 1
+            arr[s][i] = 'X'
 
             # arr에 대각선 범위 체크  // 재귀를 사용해 행마다 퀸 1개씩 놓고 visited를 사용해 열마다 퀸 1개씩 놓으므로 대각선만 체크해줌
-            for j in range(N):
+            for j in range(1, N):
                 if x + j in range(N) and y + j in range(N):
                     arr[x + j][y + j] += 1
                 if x - j in range(N) and y - j in range(N):
@@ -33,7 +35,7 @@ def dfs(s, count, arr):
             dfs(s+1, count-1, arr)
 
             # arr에 대각선 범위 체크 없애기
-            for j in range(N):
+            for j in range(1, N):
                 if x + j in range(N) and y + j in range(N):
                     arr[x + j][y + j] -= 1
                 if x - j in range(N) and y - j in range(N):
@@ -42,7 +44,7 @@ def dfs(s, count, arr):
                     arr[x - j][y + j] -= 1
                 if x + j in range(N) and y - j in range(N):
                     arr[x + j][y - j] -= 1
-
+            arr[s][i] = 0
             visited[i] = 0
 
 
