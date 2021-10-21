@@ -18,7 +18,7 @@ def bfs(x):
                 nx = x - D
 
             # 범위 체크
-            if not nx in range(F+1):
+            if not nx in range(1, F+1):
                 continue
             # 방문 체크
             if visited[nx] != 0:
