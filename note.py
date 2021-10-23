@@ -106,3 +106,99 @@ for k in range(1, len(arr)+1):
         time = [0 for i in range(max_len_arr)]
 
 print(result)
+
+# 3차원 리스트 넣기
+M, N, H = map(int, input().split())
+maps = [[] for i in range(H)]
+
+for h in range(H):
+    for i in range(N):
+        maps[h].append(list(map(int,input().split())))
+
+visited = [[[0] * H for j in range(M)] for i in range(N)]
+
+
+
+
+# 순열 조합
+
+# 주사위 나올 수 있는 모든 경우
+# 1 1 1, 1 1 2 ...
+def run1(lev):
+    if lev == N:
+        print(*arr)
+        return
+
+    for i in range(1, 7):
+        arr.append(i)
+        run1(lev+1)
+        arr.pop(-1)
+
+# 중복 제외 나올 수 있는 경우
+# 1 1 2 == 1 2 1, 2 1 1 (x)
+def run2(lev):
+    if lev >= 3:
+        print(*arr)
+        return
+
+    for i in range(1, 7):
+        if used[i] == 0:
+            used[i] = 1
+            arr.append(i)
+            run2(lev+1)
+            arr.pop(-1)
+            used[i] = 0
+# 모든 다른 수가 나올 수 있는 모든 경우
+# 1 2 3 == 1 3 2, 2 1 3 (x)
+def run3(lev, num):
+    if lev >= 1:
+        print(*arr)
+
+
+    for i in range(num, 7):
+        if used[i] == 0:
+            used[i] = 1
+            arr.append(i)
+            run3(lev+1, num)
+            arr.pop(-1)
+            used[i] = 0
+# ???
+def run4(lev):
+    q = []
+    q.append(1)
+    while q:
+        x = q.pop
+        for i in range(x, x+3):
+            if used[i] == 0:
+                used[i] = 1
+                q.append(x)
+                used[i] = 0
+
+# 연구소 문제 벽세우기
+def wall(x):
+    if x == 3:
+        print(*maps)
+        #bfs()
+        return
+
+    for i in range(n):
+        for j in range(m):
+            if maps[i][j] == 0:
+                maps[i][j] = 1
+                wall(x + 1)
+                maps[i][j] = 0
+
+n = 3
+m = 4
+maps = [[1,1,1,1], [0,0,0,0],[1,0,1,0]]
+wall(0)
+
+N = 3
+M = 2
+arr = []
+used = [0] * 10
+
+run4(0)
+print("########")
+
+//////////////////////////////////////////////////////
