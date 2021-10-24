@@ -1,4 +1,7 @@
 # 10828. 스택
+# sys.stdin.readline().split()를 써야지만 시간초과가 안남..
+
+import sys
 
 """
 push X: 정수 X를 스택에 넣는 연산이다.
@@ -13,7 +16,7 @@ N = int(input())
 stack = []
 
 for _ in range(N):
-    sql = input().split()
+    sql = sys.stdin.readline().split()
     if 'push' == sql[0]:
         stack.append(int(sql[1]))
     elif 'pop' == sql[0]:
