@@ -1,6 +1,6 @@
 # 16948. 데스나이트
 
-def dfs(r1, c1, r2, c2):
+def bfs(r1, c1, r2, c2):
     visited = [[0] * N for i in range(N)]
     distance = [[0] * N for i in range(N)]
     visited[r1][c1] = 1
@@ -35,4 +35,4 @@ r1, c1, r2, c2 = map(int, input().split())
 dr = [-2, -2, 0, 0, 2, 2]
 dc = [-1, 1, -2, 2, -1, 1]
 
-dfs(r1, c1, r2, c2)
+bfs(r1, c1, r2, c2)
