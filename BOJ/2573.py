@@ -88,4 +88,9 @@ def run():
     return result
 
 answer = run()
+
+# 빙산이 다 녹을 때까지 분리되지 않으면 0 출력
+if max(map(max, maps)) <= 0:
+    answer = 0
+
 print(answer)
