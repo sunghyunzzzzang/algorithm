@@ -5,8 +5,15 @@ from collections import deque
 dx = [-1, 0, 1, 0]
 dy = [0, -1, 0, 1]
 
-def bfs(x, y):
+def search_guest_bfs(x, y):
     global move, cur_start_x, cur_start_y,cur_end_x, cur_end_y
+
+    if maps[x][y]:
+        cur_start_x, cur_start_y = x, y
+        cur_end_x, cur_end_y = maps[x][y]
+        maps[x][y] = 0
+        return
+
     q = deque()
     q.append((x, y))
     visited = [[0] * N for i in range(N)]
@@ -39,6 +46,39 @@ def bfs(x, y):
                 return
     return -1
 
+def search_goal_bfs(x, y):
+    global move, cur_end_x, cur_end_y
+
+    q = deque()
+    q.append((x, y))
+    visited = [[0] * N for i in range(N)]
+    visited[x][y] = 1
+    while q:
+        x, y = q.popleft()
+        for d in range(4):
+            nx = x + dx[d]
+            ny = y + dy[d]
+
+            # 배열 크기 체크
+            if nx not in range(N) or ny not in range(N):
+                continue
+            # 방문 체크
+            if visited[nx][ny] != 0:
+                continue
+            # 벽 체크
+            if maps[nx][ny] == 1:
+                continue
+            # 빈 공간일 때
+            elif maps[nx][ny] == 0:
+                visited[nx][ny] = visited[x][y] + 1
+                q.append((nx, ny))
+            # 최단거리 도착지
+            if nx == cur_end_x and ny == cur_end_y:
+                move = visited[x][y]
+                return
+    return -1
+
+
 # N : 배열 크기, M : 승객 수, fuel : 연료
 N, M, fuel = map(int, input().split())
 maps = []
@@ -60,7 +100,7 @@ for i in range(M):
     cur_end_x = 0
     cur_end_y = 0
 
-    check = bfs(start_x, start_y)
+    check = search_guest_bfs(start_x, start_y)
     # 다음 출발지나 목적지 이동할 수 없으면
     if check == -1:
         print(-1)
@@ -69,16 +109,26 @@ for i in range(M):
 
     # 출발지에서 승객탑승까지 연료 계산
     fuel -= move
-    # 승객탑승에서 도착지까지 연료 계산
-    fuel -= (abs(cur_start_x - cur_end_x) + abs(cur_start_y - cur_end_y))
 
     # 연료가 바닥 났을 때
     if fuel <= 0:
         print(-1)
         break
 
+    check = search_goal_bfs(cur_start_x, cur_start_y)
+    if check == -1:
+        print(-1)
+        fuel = 0
+        break
+    # 승객탑승에서 도착지까지 연료 계산
+    fuel -= move
+    # 연료가 바닥 났을 때
+    if fuel <= -1:
+        print(-1)
+        break
+
     # 승객을 태워서 도착 시 연료 두 배 충전
-    fuel += 2 * (abs(cur_start_x - cur_end_x) + abs(cur_start_y - cur_end_y))
+    fuel += 2 * move
     # 도착지를 시작 지점으로
     start_x, start_y = cur_end_x, cur_end_y
 
