@@ -136,18 +136,15 @@ def run1(lev):
 
 # 중복 제외 나올 수 있는 경우
 # 1 1 2 == 1 2 1, 2 1 1 (x)
-def run2(lev):
+def run2(lev, start):
     if lev >= 3:
         print(*arr)
         return
 
-    for i in range(1, 7):
-        if used[i] == 0:
-            used[i] = 1
+    for i in range(start, 7):
             arr.append(i)
-            run2(lev+1)
+            run2(lev+1, i)
             arr.pop(-1)
-            used[i] = 0
 # 모든 다른 수가 나올 수 있는 모든 경우
 # 1 2 3 == 1 3 2, 2 1 3 (x)
 def run3(lev, num):
@@ -200,5 +197,26 @@ used = [0] * 10
 
 run4(0)
 print("########")
+
+
+# 15650 N과 M (2)
+
+def run(lev, start):
+    if lev == M:
+        print(*arr)
+        return
+    for i in range(start, N+1):
+        if visited[i] == 0:
+            visited[i] = 1
+            arr.append(i)
+            run(lev+1, i)
+            arr.pop()
+            visited[i] = 0
+
+
+N, M = map(int, input().split())
+arr = []
+visited = [0] * (N+1)
+run(0, 1)
 
 //////////////////////////////////////////////////////
