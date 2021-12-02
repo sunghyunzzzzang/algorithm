@@ -15,7 +15,11 @@ def run1():
     # ex2)
     for i in range(N):
         temp[i][:M] = maps[R-i][:M]
+    
+    # ex3)
+    temp = maps[::-1]
     """
+
     maps = copy.deepcopy(temp)
 
 def run2():
@@ -26,6 +30,12 @@ def run2():
     for i in range(N):
         for j in range(M):
             temp[i][j] = maps[i][C - j]
+
+    """
+    # ex2)
+    for i in range(N):
+        temp[i] = maps[i][::-1]
+    """
 
     maps = copy.deepcopy(temp)
 
