@@ -66,6 +66,10 @@ student_tuples = [
 result = sorted(student_tuples, key=lambda st: st[2])
 print(result)
 
+# 정렬
+eat.sort(key = lambda x: (x[2],x[0], x[1]))
+
+
 # hash
 for _ in range(M):
 	s, e = map(int,input().split())
